@@ -63,6 +63,24 @@ button {
     background-size: cover;
     background-position: center;
 }
-.home input {
+.home.appBox input {
     margin-top: 10% !important;
+}
+.navbarApp {
+    display: flex;
+}
+.navbarApp>div {
+    flex: 1;
+}
+.appBox {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.appBox>div {
+    margin: 10px 0;
+}
+.card {
+    margin-top: 10px;
 }

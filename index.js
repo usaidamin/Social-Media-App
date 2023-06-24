@@ -1,8 +1,8 @@
-const formOpenBtn = document.querySelector("#form-open"),
+const formOpenBtn = document.querySelector("#open-form"),
 home = document.querySelector(".home"),
 formContainer = document.querySelector(".form_container"),
-formCloseBtn = document.querySelector(".form_close"),
-signupBtn = document.querySelector("#signup"),
+formCloseBtn = document.querySelector("#close_form"),
+loginBtn = document.querySelector("#login"),
 pwShowHide = document.querySelectorAll(".pw_hide");
 
 formOpenBtn.addEventListener("click", () => home.classList.add("show"));
@@ -23,56 +23,30 @@ pwShowHide.forEach(icon => {
 })
 
 window.addEventListener("load", function () {
+    var userLogin = localStorage.getItem("loginUser");
+    if(userLogin) {
+        window.location.replace("./dashboard.html");
+    }
 })
 
-function signUp() {
-    var fullName = document.querySelector("#fullName").value;
-    var phoneNumber = document.querySelector("#phoneNumber").value;
+function loginUp(){
     var email = document.querySelector("#email").value;
-    var password = document.querySelector("#password").value;
-    var confirmPassword = document.querySelector("#confirmPassword").value;
+    var password = document.querySelector("#password").value;   
 
-    var userDetail = {
-        fullName,
-        phoneNumber,
-        email,
-        password,
-        confirmPassword
-    }
+    var userInformation = JSON.parse(localStorage.getItem("users"));
 
-    var userInfo = JSON.parse(localStorage.getItem("userDetail"))
+    var userIndex = userInformation.find(function (value) {
+        if(value.email === email && value.password === password) return true;
+    })
 
-    if(userInfo === null) {
-        var user = [];
-        user.push(userDetail);
-        localStorage.setItem("userDetail" , JSON.stringify(user));
-        alert("User Successfully SignUp");
-        window.location.href = "./login.html"
-    }
-
-    else{
-        var findUser = userInfo.find(function(value) {
-            if(value.email === email) {
-                return true;
-            }
-        })
-
-    if(findUser === undefined) {
-        userInfo.push(userDetail)
-        localStorage.setItem("userDetail", JSON.stringify(userInfo))
-        alert("User Successfully SignUp");
-        window.location.href = "./login.html"
-    }
-    else{
-        alert("Email Already Exists")
-    }
-
-    if(confirmPassword === password){
-        alert("Password Successfullt Created")
+    
+    if(userIndex !== -1) {
+        alert("User Successfully Login");
+        localStorage.setItem("loginUser" , JSON.stringify(userIndex));
+        window.location.replace("./dashboard.html");
     }
     else {
-        alert("Password does not match");
+        alert("Please Enter a valid Email OR Password");
     }
-    }
-    
+
 }
